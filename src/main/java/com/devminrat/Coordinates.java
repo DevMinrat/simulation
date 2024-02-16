@@ -3,8 +3,8 @@ package com.devminrat;
 import java.util.Objects;
 
 public class Coordinates {
-    private final int X;
-    private final int Y;
+    public final int X;
+    public final int Y;
 
     public Coordinates(int x, int y) {
         X = x;

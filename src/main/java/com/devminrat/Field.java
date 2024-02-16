@@ -5,11 +5,13 @@ import com.devminrat.entities.*;
 import java.util.HashMap;
 import java.util.Random;
 
+import static com.devminrat.utils.EntityPathFinder.findPathToTarget;
+
 public class Field {
 
     Random random = new Random();
 
-    public static HashMap<Coordinates, Entity> entities = new HashMap<>();
+    public static final HashMap<Coordinates, Entity> entities = new HashMap<>();
 
     private Coordinates getRandomCoordinates() {
         Coordinates coordinates;
@@ -23,21 +25,45 @@ public class Field {
 
 
     public void setEntities() {
-        for (int i = 0; i < 25; i++) {
-            Coordinates obstacleCoordinates = getRandomCoordinates();
-            entities.put(obstacleCoordinates, new Obstacle(obstacleCoordinates));
-        }
 
-        for (int i = 0; i < 5; i++) {
-            Coordinates foodCoordinates = getRandomCoordinates();
-            entities.put(foodCoordinates, new Food(foodCoordinates));
+        entities.put(new Coordinates(2,3), new Obstacle(new Coordinates(2,3)));
+        entities.put(new Coordinates(2,4), new Obstacle(new Coordinates(2,4)));
+        entities.put(new Coordinates(2,5), new Obstacle(new Coordinates(2,5)));
+        entities.put(new Coordinates(2,6), new Obstacle(new Coordinates(2,6)));
+        entities.put(new Coordinates(3,6), new Obstacle(new Coordinates(3,6)));
+        entities.put(new Coordinates(4,6), new Obstacle(new Coordinates(4,6)));
 
-            Coordinates herbivoreCoordinates = getRandomCoordinates();
-            entities.put(herbivoreCoordinates, new Herbivore(herbivoreCoordinates));
+        entities.put(new Coordinates(3,2), new Herbivore(new Coordinates(3,2)));
 
-            Coordinates predatorCoordinates = getRandomCoordinates();
-            entities.put(predatorCoordinates, new Predator(predatorCoordinates));
-        }
+        entities.put(new Coordinates(2,7), new Food(new Coordinates(2,7)));
+
+        Herbivore herbivore = (Herbivore) entities.get(new Coordinates(3,2));
+        FieldConsoleRender cr = new FieldConsoleRender();
+
+        herbivore.makeMove();
+        cr.colorizeField();
+        herbivore.makeMove();
+        cr.colorizeField();
+        herbivore.makeMove();
+        cr.colorizeField();
+        herbivore.makeMove();
+        cr.colorizeField();
+
+//        for (int i = 0; i < 25; i++) {
+//            Coordinates obstacleCoordinates = getRandomCoordinates();
+//            entities.put(obstacleCoordinates, new Obstacle(obstacleCoordinates));
+//        }
+//
+//        for (int i = 0; i < 5; i++) {
+//            Coordinates foodCoordinates = getRandomCoordinates();
+//            entities.put(foodCoordinates, new Food(foodCoordinates));
+//
+//            Coordinates herbivoreCoordinates = getRandomCoordinates();
+//            entities.put(herbivoreCoordinates, new Herbivore(herbivoreCoordinates));
+//
+//            Coordinates predatorCoordinates = getRandomCoordinates();
+//            entities.put(predatorCoordinates, new Predator(predatorCoordinates));
+//        }
 
     }
 

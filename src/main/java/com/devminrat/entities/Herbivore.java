@@ -7,6 +7,5 @@ public class Herbivore extends Creature {
 
     public Herbivore(Coordinates position) {
         super(position, SPRITE);
-
     }
 }

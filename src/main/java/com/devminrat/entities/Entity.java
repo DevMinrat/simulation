@@ -4,6 +4,8 @@ import com.devminrat.Coordinates;
 
 import java.util.Random;
 
+import static com.devminrat.Field.entities;
+
 public abstract class Entity {
     private Coordinates position;
     private final String sprite;
