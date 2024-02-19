@@ -2,9 +2,9 @@ package com.devminrat.entities;
 
 import com.devminrat.Coordinates;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
-import static com.devminrat.Field.entities;
 import static com.devminrat.utils.EntityPathFinder.findPathToTarget;
 
 public abstract class Creature extends Entity {
@@ -14,25 +14,27 @@ public abstract class Creature extends Entity {
         super(position, sprite);
     }
 
-    public void makeMove() {
-        var path = getPathToTarget(this.getPosition());
-
+    public HashMap<Coordinates, Entity> makeMove(HashMap<Coordinates, Entity> entities) {
+        var path = getPathToTarget(entities);
         entities.remove(this.getPosition());
         entities.put(path.peek(), this);
         this.setPosition(path.peek());
 
-        //TODO: if we have a path to target, when we make a move we should check Node in front of it, because it might not be free.
-        // If the Node not free, we should recalculate path.
-        // As for predator we should recalculate path each move, because herbivore moves too.
+        return entities;
     }
 
-    public LinkedList<Coordinates> getPathToTarget(Coordinates coordinates) {
-        return findPathToTarget(this);
+    public LinkedList<Coordinates> getPathToTarget(HashMap<Coordinates, Entity> entities) {
+        return findPathToTarget(this, entities);
     }
 
-    public void eat(Coordinates coordinates, int health) {
+    public void eat(Coordinates coordinates) {
+        go(coordinates);
+        setHealth(this.health + 5);
+    }
+
+    public void go(Coordinates coordinates) {
         this.setPosition(coordinates);
-        setHealth(health);
+        setHealth(this.health - 1);
     }
 
     public int getHealth() {

@@ -5,11 +5,11 @@ import com.devminrat.entities.*;
 
 import java.util.*;
 
-import static com.devminrat.Field.entities;
+import static com.devminrat.Field.*;
 
 
 public final class EntityPathFinder {
-    public static LinkedList<Coordinates> findPathToTarget(Creature creature) {
+    public static LinkedList<Coordinates> findPathToTarget(Creature creature, HashMap<Coordinates, Entity> entities) {
         Class<? extends Entity> target = creature.getClass().equals(Herbivore.class) ? Food.class : Herbivore.class;
         Coordinates currentNode = creature.getPosition();
         Set<Coordinates> checkedNodes = new HashSet<>();
@@ -30,10 +30,10 @@ public final class EntityPathFinder {
                     return path;
                 }
 
-                tryAddNode(row - 1, col, path, checkedNodes, nextStep);
-                tryAddNode(row + 1, col, path, checkedNodes, nextStep);
-                tryAddNode(row, col - 1, path, checkedNodes, nextStep);
-                tryAddNode(row, col + 1, path, checkedNodes, nextStep);
+                tryAddNode(row - 1, col, path, checkedNodes, nextStep, entities);
+                tryAddNode(row + 1, col, path, checkedNodes, nextStep, entities);
+                tryAddNode(row, col - 1, path, checkedNodes, nextStep, entities);
+                tryAddNode(row, col + 1, path, checkedNodes, nextStep, entities);
             }
 
             step = nextStep;
@@ -42,8 +42,9 @@ public final class EntityPathFinder {
         return null;
     }
 
-    private static void tryAddNode(int row, int column, LinkedList<Coordinates> path, Set<Coordinates> checkedNodes, HashMap<Coordinates, LinkedList<Coordinates>> nextStep) {
-        if (isValidNeighbour(checkedNodes, row, column)) {
+    private static void tryAddNode(int row, int column, LinkedList<Coordinates> path, Set<Coordinates> checkedNodes,
+                                   HashMap<Coordinates, LinkedList<Coordinates>> nextStep, HashMap<Coordinates, Entity> entities) {
+        if (isValidNeighbour(row, column, entities, checkedNodes)) {
             Coordinates node = new Coordinates(row, column);
             LinkedList<Coordinates> newPath = new LinkedList<>(path);
 
@@ -53,8 +54,8 @@ public final class EntityPathFinder {
         }
     }
 
-    private static boolean isValidNeighbour(Set<Coordinates> checkedNodes, int row, int col) {
-        if (row < 0 || row >= 15 || col < 0 || col >= 10) {
+    private static boolean isValidNeighbour(int row, int col, HashMap<Coordinates, Entity> entities, Set<Coordinates> checkedNodes) {
+        if (row < 0 || row >= COLS || col < 0 || col >= ROWS) {
             return false;
         }
 

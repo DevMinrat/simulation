@@ -1,15 +1,19 @@
 package com.devminrat;
 
-import static com.devminrat.Field.entities;
+import com.devminrat.entities.Entity;
+
+import java.util.HashMap;
+
+import static com.devminrat.Field.*;
 
 public class FieldConsoleRender {
     public final static String ANSI_RESET = "\u001b[0m";
     public final static String CELL_COLOR_1 = "\u001b[48;5;23;38;5;23m";
     public final static String CELL_COLOR_2 = "\u001b[48;5;64;38;5;64m";
 
-    public void colorizeField() {
-        for (int row = 0; row < 10; row++) {
-            for (int col = 0; col < 15; col++) {
+    public void printField(HashMap<Coordinates, Entity> entities) {
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
                 var c = new Coordinates(row, col);
 
                 if ((row + col) % 2 == 0) {
