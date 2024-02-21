@@ -3,6 +3,7 @@ package com.devminrat;
 import com.devminrat.entities.*;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Random;
 
 public final class Field {
@@ -10,17 +11,19 @@ public final class Field {
     public static final int ROWS = 10;
     public static final int COLS = 15;
 
+
     private final Random random = new Random();
 
-    private HashMap<Coordinates, Entity> entities = new HashMap<>();
+    private LinkedHashMap<Coordinates, Entity> entities = new LinkedHashMap<>();
 
-    public HashMap<Coordinates, Entity> getEntities() {
+    public LinkedHashMap<Coordinates, Entity> getEntities() {
         return entities;
     }
 
-    public HashMap<Coordinates, Entity> setEntities(HashMap<Coordinates, Entity> entities) {
+    public LinkedHashMap<Coordinates, Entity> setEntities(LinkedHashMap<Coordinates, Entity> entities) {
         return this.entities = entities;
     }
+
     private Coordinates getRandomCoordinates() {
         Coordinates coordinates;
 
@@ -41,9 +44,10 @@ public final class Field {
         entities.put(new Coordinates(3, 6), new Obstacle(new Coordinates(3, 6)));
         entities.put(new Coordinates(4, 6), new Obstacle(new Coordinates(4, 6)));
 
-        entities.put(new Coordinates(3, 2), new Herbivore(new Coordinates(3, 2)));
+        entities.put(new Coordinates(3, 7), new Herbivore(new Coordinates(3, 7)));
+        entities.put(new Coordinates(4, 8), new Predator(new Coordinates(4, 8)));
 
-        entities.put(new Coordinates(2, 7), new Food(new Coordinates(2, 7)));
+        entities.put(new Coordinates(5, 7), new Food(new Coordinates(5, 7)));
 
 
 //        for (int i = 0; i < 25; i++) {
@@ -62,6 +66,27 @@ public final class Field {
 //            entities.put(predatorCoordinates, new Predator(predatorCoordinates));
 //        }
 
+    }
+
+    public void addFood(int count) {
+        for (int i = 0; i < count; i++) {
+            Coordinates coord = getRandomCoordinates();
+            entities.put(coord, new Food(coord));
+        }
+    }
+
+    public void addHerbivores(int count) {
+        for (int i = 0; i < count; i++) {
+            Coordinates coord = getRandomCoordinates();
+            entities.put(coord, new Herbivore(coord));
+        }
+    }
+
+    public void addPredators(int count) {
+        for (int i = 0; i < count; i++) {
+            Coordinates coord = getRandomCoordinates();
+            entities.put(coord, new Predator(coord));
+        }
     }
 
 }
