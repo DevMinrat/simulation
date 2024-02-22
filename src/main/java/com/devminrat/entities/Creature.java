@@ -22,7 +22,9 @@ public abstract class Creature extends Entity {
             eat(entities, target);
         } else {
             var path = getPathToTarget(entities);
-            go(entities, path.peek());
+
+            if (path != null)
+                go(entities, path.peek());
         }
 
         return entities;
@@ -70,4 +72,6 @@ public abstract class Creature extends Entity {
     private void setHealth(int health) {
         this.health = health;
     }
+
+
 }

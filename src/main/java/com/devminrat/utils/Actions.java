@@ -5,24 +5,32 @@ import com.devminrat.Field;
 import com.devminrat.FieldConsoleRender;
 import com.devminrat.entities.*;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class Actions {
 
     public static void nextTurn(Field field, FieldConsoleRender cr) {
+        //TODO: need to refactoring this. Use DAO or similar
         System.out.println("====================================================  NEW STEP  =============================================================");
-        LinkedHashMap<Coordinates, Entity> copyEntities = new LinkedHashMap<>(field.getEntities());
-        for (Entity entity : field.getEntities().values()) {
+        var entities = field.getEntities();
+        System.out.println(entities.values());
+        LinkedHashMap<Coordinates, Entity> copyEntities = new LinkedHashMap<>(entities);
+        System.out.println(copyEntities.equals(entities));
+
+        for (Entity entity : entities.values()) {
             if (entity instanceof Creature) {
-                copyEntities = ((Creature) entity).makeMove(new LinkedHashMap<>(copyEntities)); // Передаем копию карты
+                System.out.println(1);
+                copyEntities = ((Creature) entity).makeMove(copyEntities);
                 field.setEntities(copyEntities);
-                System.out.println(entity + " " + entity.getPosition());
                 cr.printField(copyEntities);
 
                 addEntitiesIfNeeded(field);
             }
         }
+        System.out.println(entities.values());
     }
 
     private static void addEntitiesIfNeeded(Field field) {

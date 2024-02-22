@@ -44,10 +44,14 @@ public final class Field {
         entities.put(new Coordinates(3, 6), new Obstacle(new Coordinates(3, 6)));
         entities.put(new Coordinates(4, 6), new Obstacle(new Coordinates(4, 6)));
 
-        entities.put(new Coordinates(3, 7), new Herbivore(new Coordinates(3, 7)));
-        entities.put(new Coordinates(4, 8), new Predator(new Coordinates(4, 8)));
+        addHerbivores(5);
+        addFood(5);
+        addPredators(5);
 
-        entities.put(new Coordinates(5, 7), new Food(new Coordinates(5, 7)));
+//        entities.put(new Coordinates(3, 7), new Herbivore(new Coordinates(3, 7)));
+//        entities.put(new Coordinates(5, 7), new Food(new Coordinates(5, 7)));
+//        entities.put(new Coordinates(4, 9), new Predator(new Coordinates(4, 9)));
+
 
 
 //        for (int i = 0; i < 25; i++) {
@@ -78,7 +82,7 @@ public final class Field {
     public void addHerbivores(int count) {
         for (int i = 0; i < count; i++) {
             Coordinates coord = getRandomCoordinates();
-            entities.put(coord, new Herbivore(coord));
+            entities.putFirst(coord, new Herbivore(coord));
         }
     }
 

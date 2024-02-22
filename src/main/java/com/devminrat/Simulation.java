@@ -19,27 +19,12 @@ public class Simulation {
 
         FieldConsoleRender cr = new FieldConsoleRender();
         cr.printField(field.getEntities());
-//        Thread.sleep(1000);
-        nextTurn(field, cr);
-//        Thread.sleep(1000);
-        nextTurn(field, cr);
-//        Thread.sleep(1000);
-        nextTurn(field, cr);
-//        Thread.sleep(1000);
-        nextTurn(field, cr);
-//        Thread.sleep(1000);
-        nextTurn(field, cr);
-//        Thread.sleep(1000);
-        nextTurn(field, cr);
-//        Thread.sleep(1000);
-        nextTurn(field, cr);
-//        Thread.sleep(1000);
-        nextTurn(field, cr);
-//        Thread.sleep(1000);
-        nextTurn(field, cr);
-//        Thread.sleep(1000);
-        nextTurn(field, cr);
-//        Thread.sleep(1000);
+
+
+        for (int i = 0; i < 50; i++) {
+            nextTurn(field, cr);
+        }
+
 
     }
 }
