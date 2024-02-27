@@ -2,8 +2,9 @@ package com.devminrat.entities;
 
 import com.devminrat.Coordinates;
 
-public class Predator extends Creature {
+import java.util.LinkedHashMap;
 
+public class Predator extends Creature {
     private final static int DAMAGE = 5;
     private static final String SPRITE = EntitySprite.PREDATOR.getSprite();
 
@@ -14,4 +15,14 @@ public class Predator extends Creature {
     public void attack(Coordinates coordinates, Herbivore herbivore) {
         //do attack
     }
+
+    @Override
+    void eat(LinkedHashMap<Coordinates, Entity> entities, Coordinates coordinates) {
+        Removable eatedEntity = (Removable) entities.get(coordinates);
+
+        eatedEntity.setForDeletion(true);
+        go(entities, coordinates);
+        setHealth(this.getHealth() + 5);
+    }
+
 }

@@ -8,8 +8,9 @@ import java.util.LinkedList;
 
 import static com.devminrat.utils.EntityPathFinder.findPathToTarget;
 
-public abstract class Creature extends Entity {
+public abstract class Creature extends Entity implements Removable {
     private int health = 20;
+    private boolean forDeletion = false;
 
     public Creature(Coordinates position, String sprite) {
         super(position, sprite);
@@ -34,12 +35,9 @@ public abstract class Creature extends Entity {
         return findPathToTarget(this, entities);
     }
 
-    private void eat(LinkedHashMap<Coordinates, Entity> entities, Coordinates coordinates) {
-        go(entities, coordinates);
-        setHealth(this.health + 5);
-    }
+    abstract void eat(LinkedHashMap<Coordinates, Entity> entities, Coordinates coordinates);
 
-    private void go(LinkedHashMap<Coordinates, Entity> entities, Coordinates coordinates) {
+    void go(LinkedHashMap<Coordinates, Entity> entities, Coordinates coordinates) {
         entities.remove(this.getPosition());
         entities.put(coordinates, this);
         this.setPosition(coordinates);
@@ -69,9 +67,18 @@ public abstract class Creature extends Entity {
         return health;
     }
 
-    private void setHealth(int health) {
+    void setHealth(int health) {
         this.health = health;
     }
 
+    @Override
+    public boolean isForDeletion() {
+        return forDeletion;
+    }
+
+    @Override
+    public void setForDeletion(boolean forDeletion) {
+        this.forDeletion = forDeletion;
+    }
 
 }
