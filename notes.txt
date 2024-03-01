@@ -1,6 +1,3 @@
 //TODO
-1. Death after health runs out. +
-2. Attack method for Predator
-3. Random speed and health for Creatures. Random attack for Predator
 4. One frame visualisation
 5. Action controller - do one turn, run infinity loop, pause infinity game, stop infinity game.

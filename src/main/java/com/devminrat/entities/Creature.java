@@ -9,7 +9,7 @@ import java.util.Random;
 import static com.devminrat.utils.EntityPathFinder.findPathToTarget;
 
 public abstract class Creature extends Entity implements Removable {
-    protected static Random random = new Random();
+    static Random random = new Random();
 
     private int health = random.nextInt(10, 31);
     private int speed = random.nextInt(1, 4);
@@ -20,24 +20,9 @@ public abstract class Creature extends Entity implements Removable {
         super(position, sprite);
     }
 
-    public LinkedHashMap<Coordinates, Entity> makeMove(LinkedHashMap<Coordinates, Entity> entities) {
-        var target = checkTargetAround(entities, this);
+    public abstract LinkedHashMap<Coordinates, Entity> makeMove(LinkedHashMap<Coordinates, Entity> entities);
 
-        if (target != null) {
-            eat(entities, target);
-        } else {
-            var path = getPathToTarget(entities);
-
-            if (path != null)
-                go(entities, path.peek());
-        }
-
-        checkStarvation(entities);
-
-        return entities;
-    }
-
-    private LinkedList<Coordinates> getPathToTarget(LinkedHashMap<Coordinates, Entity> entities) {
+    LinkedList<Coordinates> getPathToTarget(LinkedHashMap<Coordinates, Entity> entities) {
         return findPathToTarget(this, entities);
     }
 
@@ -47,10 +32,10 @@ public abstract class Creature extends Entity implements Removable {
         entities.remove(this.getPosition());
         entities.put(coordinates, this);
         this.setPosition(coordinates);
-        setHealth(this.health - 1);
+        takeDamage(1);
     }
 
-    private static Coordinates checkTargetAround(LinkedHashMap<Coordinates, Entity> entities, Creature creature) {
+    static Coordinates checkTargetAround(LinkedHashMap<Coordinates, Entity> entities, Creature creature) {
         Class<? extends Entity> target = creature.getClass().equals(Herbivore.class) ? Food.class : Herbivore.class;
         Coordinates position = creature.getPosition();
         int row = position.X;
@@ -69,7 +54,7 @@ public abstract class Creature extends Entity implements Removable {
         return null;
     }
 
-    private void checkStarvation(LinkedHashMap<Coordinates, Entity> entities) {
+    void checkStarvation(LinkedHashMap<Coordinates, Entity> entities) {
         if (this.getHealth() <= 0) {
             this.death(entities);
         }
@@ -101,4 +86,7 @@ public abstract class Creature extends Entity implements Removable {
         return speed;
     }
 
+    protected void takeDamage(int damage) {
+        this.health -= damage;
+    }
 }

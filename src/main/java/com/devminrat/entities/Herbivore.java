@@ -12,6 +12,24 @@ public class Herbivore extends Creature {
     }
 
     @Override
+    public LinkedHashMap<Coordinates, Entity> makeMove(LinkedHashMap<Coordinates, Entity> entities) {
+        Coordinates targetCoord = checkTargetAround(entities, this);
+
+        if (targetCoord != null) {
+            eat(entities, targetCoord);
+        } else {
+            var path = getPathToTarget(entities);
+
+            if (path != null)
+                go(entities, path.peek());
+        }
+
+        checkStarvation(entities);
+
+        return entities;
+    }
+
+    @Override
     void eat(LinkedHashMap<Coordinates, Entity> entities, Coordinates coordinates) {
         go(entities, coordinates);
         setHealth(this.getHealth() + NUTRITIONAL_VALUE);

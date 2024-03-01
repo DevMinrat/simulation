@@ -17,8 +17,11 @@ public class Actions {
         for (Entity entity : entities.values()) {
             if (entity instanceof Creature creature) {
                 if (creature.isForDeletion()) return;
-                System.out.println(creature.getHealth());
-                System.out.println(creature.getSpeed());
+                if (entity instanceof Predator predator) {
+                    System.out.println(creature.getClass() + " Xp: " + creature.getHealth() + " " +  " Speed: " + creature.getSpeed() +  " Damage: " + predator.damage);
+                } else {
+                    System.out.println(creature.getClass() + " Xp: " + creature.getHealth() + " " +  " Speed: " + creature.getSpeed());
+                }
                 System.out.println("------------------------------------------------------------------");
                 for (int i = 0; i < creature.getSpeed(); i++) {
                     copyEntities = creature.makeMove(copyEntities);
