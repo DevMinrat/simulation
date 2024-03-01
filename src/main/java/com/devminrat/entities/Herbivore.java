@@ -14,7 +14,7 @@ public class Herbivore extends Creature {
     @Override
     void eat(LinkedHashMap<Coordinates, Entity> entities, Coordinates coordinates) {
         go(entities, coordinates);
-        setHealth(this.getHealth() + 5);
+        setHealth(this.getHealth() + NUTRITIONAL_VALUE);
     }
 
 }

@@ -44,9 +44,9 @@ public final class Field {
         entities.put(new Coordinates(3, 6), new Obstacle(new Coordinates(3, 6)));
         entities.put(new Coordinates(4, 6), new Obstacle(new Coordinates(4, 6)));
 
-        addHerbivores(5);
-        addFood(5);
-        addPredators(5);
+        addHerbivores(1);
+        addFood(1);
+        addPredators(1);
 
 //        entities.put(new Coordinates(3, 7), new Herbivore(new Coordinates(3, 7)));
 //        entities.put(new Coordinates(5, 7), new Food(new Coordinates(5, 7)));

@@ -17,13 +17,16 @@ public class Actions {
         for (Entity entity : entities.values()) {
             if (entity instanceof Creature creature) {
                 if (creature.isForDeletion()) return;
-
+                System.out.println(creature.getHealth());
+                System.out.println(creature.getSpeed());
                 System.out.println("------------------------------------------------------------------");
-                copyEntities = creature.makeMove(copyEntities);
-                field.setEntities(copyEntities);
-                cr.printField(copyEntities);
+                for (int i = 0; i < creature.getSpeed(); i++) {
+                    copyEntities = creature.makeMove(copyEntities);
+                    field.setEntities(copyEntities);
+                    cr.printField(copyEntities);
 
-                addEntitiesIfNeeded(field);
+                    addEntitiesIfNeeded(field);
+                }
             }
         }
     }

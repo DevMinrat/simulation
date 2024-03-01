@@ -2,14 +2,18 @@ package com.devminrat.entities;
 
 import com.devminrat.Coordinates;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Random;
 
 import static com.devminrat.utils.EntityPathFinder.findPathToTarget;
 
 public abstract class Creature extends Entity implements Removable {
-    private int health = 20;
+    protected static Random random = new Random();
+
+    private int health = random.nextInt(10, 31);
+    private int speed = random.nextInt(1, 4);
+    public static final int NUTRITIONAL_VALUE = 5;
     private boolean forDeletion = false;
 
     public Creature(Coordinates position, String sprite) {
@@ -66,7 +70,7 @@ public abstract class Creature extends Entity implements Removable {
     }
 
     private void checkStarvation(LinkedHashMap<Coordinates, Entity> entities) {
-        if(this.getHealth() <= 0) {
+        if (this.getHealth() <= 0) {
             this.death(entities);
         }
     }
@@ -91,6 +95,10 @@ public abstract class Creature extends Entity implements Removable {
     @Override
     public void setForDeletion(boolean forDeletion) {
         this.forDeletion = forDeletion;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
 }

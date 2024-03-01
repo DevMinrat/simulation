@@ -5,7 +5,7 @@ import com.devminrat.Coordinates;
 import java.util.LinkedHashMap;
 
 public class Predator extends Creature {
-    private final static int DAMAGE = 5;
+    private final int damage = random.nextInt(1, 6);
     private static final String SPRITE = EntitySprite.PREDATOR.getSprite();
 
     public Predator(Coordinates position) {
@@ -22,7 +22,7 @@ public class Predator extends Creature {
 
         eatedEntity.setForDeletion(true);
         go(entities, coordinates);
-        setHealth(this.getHealth() + 5);
+        setHealth(this.getHealth() + NUTRITIONAL_VALUE);
     }
 
 }
