@@ -28,6 +28,8 @@ public abstract class Creature extends Entity implements Removable {
                 go(entities, path.peek());
         }
 
+        checkStarvation(entities);
+
         return entities;
     }
 
@@ -61,6 +63,16 @@ public abstract class Creature extends Entity implements Removable {
         }
 
         return null;
+    }
+
+    private void checkStarvation(LinkedHashMap<Coordinates, Entity> entities) {
+        if(this.getHealth() <= 0) {
+            this.death(entities);
+        }
+    }
+
+    private void death(LinkedHashMap<Coordinates, Entity> entities) {
+        entities.remove(this.getPosition());
     }
 
     public int getHealth() {

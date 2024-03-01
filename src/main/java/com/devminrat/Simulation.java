@@ -22,9 +22,9 @@ public class Simulation {
 
 
         for (int i = 0; i < 50; i++) {
+            Thread.sleep(1000);
             nextTurn(field, cr);
         }
-
 
     }
 }
