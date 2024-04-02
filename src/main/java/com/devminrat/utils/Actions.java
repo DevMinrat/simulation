@@ -4,35 +4,53 @@ import com.devminrat.Coordinates;
 import com.devminrat.Field;
 import com.devminrat.FieldConsoleRender;
 import com.devminrat.entities.*;
+import com.devminrat.gui.GridPanel;
 
+import javax.swing.*;
 import java.util.*;
 
 public class Actions {
 
-    public static void nextTurn(Field field, FieldConsoleRender cr) {
-        System.out.println("====================================================  NEW STEP  =============================================================");
-        var entities = field.getEntities();
-        LinkedHashMap<Coordinates, Entity> copyEntities = new LinkedHashMap<>(entities);
+    public static void nextTurn(Field field, GridPanel gridPanel) {
+        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
 
-        for (Entity entity : entities.values()) {
-            if (entity instanceof Creature creature) {
-                if (creature.isForDeletion()) return;
-                if (entity instanceof Predator predator) {
-                    System.out.println(creature.getClass() + " Xp: " + creature.getHealth() + " " +  " Speed: " + creature.getSpeed() +  " Damage: " + predator.damage);
-                } else {
-                    System.out.println(creature.getClass() + " Xp: " + creature.getHealth() + " " +  " Speed: " + creature.getSpeed());
-                }
-                System.out.println("------------------------------------------------------------------");
-                for (int i = 0; i < creature.getSpeed(); i++) {
-                    copyEntities = creature.makeMove(copyEntities);
-                    field.setEntities(copyEntities);
-                    cr.printField(copyEntities);
+            @Override
+            protected Void doInBackground() {
+                var entities = field.getEntities();
+                LinkedHashMap<Coordinates, Entity> copyEntities = new LinkedHashMap<>(entities);
 
-                    addEntitiesIfNeeded(field);
+                for (Entity entity : entities.values()) {
+                    if (entity instanceof Creature creature) {
+                        if (creature.isForDeletion()) return null;
+                        for (int i = 0; i < creature.getSpeed(); i++) {
+                            System.out.println("Move");
+                            copyEntities = creature.makeMove(copyEntities);
+                            field.setEntities(copyEntities);
+
+                            addEntitiesIfNeeded(field);
+
+                            //TODO try to remove redundant copy
+                            LinkedHashMap<Coordinates, Entity> finalCopyEntities = copyEntities;
+                            SwingUtilities.invokeLater(() -> {
+                                gridPanel.updateEntities(new LinkedHashMap<>(finalCopyEntities));
+                            });
+
+                            try {
+                                //TODO  replace by swing.timer
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 }
+                return null;
             }
-        }
+
+        };
+        worker.execute();
     }
+
 
     private static void addEntitiesIfNeeded(Field field) {
         var foodCount = 0;

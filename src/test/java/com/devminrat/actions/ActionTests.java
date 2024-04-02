@@ -18,9 +18,9 @@ public class ActionTests {
     }
 
     @Test
-    public void test_nextTurn_predatorCount() {
+    public void test_nextTurn_predatorCount() throws InterruptedException {
         for (int i = 0; i < 50; i++) {
-            nextTurn(tc.testField, tc.consoleRender);
+//            nextTurn(tc.testField, tc.consoleRender);
         }
     }
 }

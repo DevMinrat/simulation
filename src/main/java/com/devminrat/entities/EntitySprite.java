@@ -1,10 +1,10 @@
 package com.devminrat.entities;
 
 public enum EntitySprite {
-    FOOD("\uD83C\uDF4E"),
-    OBSTACLE("\uD83E\uDDF1"),
-    HERBIVORE("\uD83D\uDC1B"),
-    PREDATOR("\uD83D\uDC14");
+    FOOD("images/food-s.png"),
+    OBSTACLE("images/obstacle-s.png"),
+    HERBIVORE("images/herbivore-s.png"),
+    PREDATOR("images/predator-s.png");
 
     private final String sprite;
 

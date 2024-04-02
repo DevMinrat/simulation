@@ -1,30 +1,48 @@
 package com.devminrat;
 
+import com.devminrat.gui.GridPanel;
+
+import javax.swing.*;
+import java.awt.*;
+
 import static com.devminrat.utils.Actions.nextTurn;
 
 public class Simulation {
-    public static void main(String[] args) throws InterruptedException {
-        System.out.println("Hello world!");
-
-        // Map          +
-        // Step counter -
-        // Field render +
-        // actions      -
-        //nextTurn() - просимулировать и отрендерить один ход
-        //startSimulation() - запустить бесконечный цикл симуляции и рендеринга
-        //pauseSimulation() - приостановить бесконечный цикл симуляции и рендеринга
-
+    public static void main(String[] args) {
         Field field = new Field();
         field.initEntities();
 
-        FieldConsoleRender cr = new FieldConsoleRender();
-        cr.printField(field.getEntities());
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Simulation");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            GridPanel gridPanel = new GridPanel(Field.ROWS, Field.COLS, 50, field.getEntities());
+
+            Button button = new Button("repaint");
+            button.setSize(120, 3);
+            button.addActionListener(e -> {
+                nextTurn(field, gridPanel);
+            });
+
+            frame.add(gridPanel, BorderLayout.CENTER);
+            frame.add(button, BorderLayout.SOUTH);
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+
+            gridPanel.createBoardImage();
+
+//            nextTurn(field, gridPanel);
+        });
 
 
-        for (int i = 0; i < 50; i++) {
-            Thread.sleep(1000);
-            nextTurn(field, cr);
-        }
+//        FieldConsoleRender cr = new FieldConsoleRender();
+//        cr.printField(field.getEntities());
+//
+//
+//        for (int i = 0; i < 50; i++) {
+//            nextTurn(field, cr);
+//        }
 
     }
 }

@@ -1,3 +1,10 @@
 //TODO
-4. One frame visualisation
-5. Action controller - do one turn, run infinity loop, pause infinity game, stop infinity game.
+
+1) Step counter and move info
+2) Actions:
+    - nextTurn() - do one turn
+    - startSimulation() - run loop game
+    - pauseSimulation() - pause game
+    - resumeSimulation() - pause game
+
+3) Block all buttons (instead of pause button) while game is running.
