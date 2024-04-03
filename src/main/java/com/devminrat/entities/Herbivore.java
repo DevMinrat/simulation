@@ -1,6 +1,7 @@
 package com.devminrat.entities;
 
 import com.devminrat.Coordinates;
+import com.devminrat.gui.ButtonManager;
 
 import java.util.LinkedHashMap;
 
@@ -20,8 +21,11 @@ public class Herbivore extends Creature {
         } else {
             var path = getPathToTarget(entities);
 
-            if (path != null)
+            if (path != null) {
                 go(entities, path.peek());
+            } else {
+                takeDamage(1);
+            }
         }
 
         checkStarvation(entities);
@@ -33,6 +37,7 @@ public class Herbivore extends Creature {
     void eat(LinkedHashMap<Coordinates, Entity> entities, Coordinates coordinates) {
         go(entities, coordinates);
         setHealth(this.getHealth() + NUTRITIONAL_VALUE);
+        ButtonManager.setTextIntoInfoField(this.getClass().getSimpleName() + " ate " + coordinates );
     }
 
 }

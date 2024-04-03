@@ -1,6 +1,7 @@
 package com.devminrat.entities;
 
 import com.devminrat.Coordinates;
+import com.devminrat.gui.ButtonManager;
 
 import java.util.LinkedHashMap;
 
@@ -16,6 +17,8 @@ public class Predator extends Creature {
         Creature target = (Creature) entities.get(coordinates);
         target.takeDamage(damage);
         takeDamage(1);
+
+        ButtonManager.setTextIntoInfoField(this.getClass().getSimpleName() + " attacked " + coordinates );
     }
 
     @Override
@@ -33,8 +36,9 @@ public class Predator extends Creature {
         } else {
             var path = getPathToTarget(entities);
 
-            if (path != null)
+            if (path != null) {
                 go(entities, path.peek());
+            }
         }
 
         checkStarvation(entities);
@@ -49,6 +53,8 @@ public class Predator extends Creature {
         eatedEntity.setForDeletion(true);
         go(entities, coordinates);
         setHealth(this.getHealth() + NUTRITIONAL_VALUE);
+
+        ButtonManager.setTextIntoInfoField(this.getClass().getSimpleName() + " ate " + coordinates );
     }
 
 }

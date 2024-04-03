@@ -2,18 +2,20 @@ package com.devminrat.utils;
 
 import com.devminrat.Coordinates;
 import com.devminrat.Field;
-import com.devminrat.FieldConsoleRender;
 import com.devminrat.entities.*;
 import com.devminrat.gui.GridPanel;
 
 import javax.swing.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static com.devminrat.gui.ButtonManager.setButtonsEnabled;
 
 public class Actions {
+    public static AtomicReference<SwingWorker<Void, Void>> turnWorker = new AtomicReference<>();
 
     public static void nextTurn(Field field, GridPanel gridPanel) {
         SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-
             @Override
             protected Void doInBackground() {
                 var entities = field.getEntities();
@@ -29,15 +31,10 @@ public class Actions {
 
                             addEntitiesIfNeeded(field);
 
-                            //TODO try to remove redundant copy
-                            LinkedHashMap<Coordinates, Entity> finalCopyEntities = copyEntities;
-                            SwingUtilities.invokeLater(() -> {
-                                gridPanel.updateEntities(new LinkedHashMap<>(finalCopyEntities));
-                            });
+                            gridPanel.updateEntities(copyEntities);
 
                             try {
-                                //TODO  replace by swing.timer
-                                Thread.sleep(1000);
+                                Thread.sleep(500);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -47,7 +44,12 @@ public class Actions {
                 return null;
             }
 
+            @Override
+            protected void done() {
+                setButtonsEnabled(true);
+            }
         };
+        turnWorker.set(worker);
         worker.execute();
     }
 
@@ -67,7 +69,7 @@ public class Actions {
             }
         }
 
-        if (foodCount == 0) {
+        if (foodCount == 1) {
             field.addFood(5);
         } else if (herbivoreCount == 0) {
             field.addHerbivores(5);

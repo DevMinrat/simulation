@@ -1,6 +1,7 @@
 package com.devminrat.entities;
 
 import com.devminrat.Coordinates;
+import com.devminrat.gui.ButtonManager;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -12,7 +13,7 @@ public abstract class Creature extends Entity implements Removable {
     static Random random = new Random();
 
     private int health = random.nextInt(10, 31);
-    private int speed = random.nextInt(1, 4);
+    private final int speed = random.nextInt(1, 4);
     public static final int NUTRITIONAL_VALUE = 5;
     private boolean forDeletion = false;
 
@@ -33,6 +34,8 @@ public abstract class Creature extends Entity implements Removable {
         entities.put(coordinates, this);
         this.setPosition(coordinates);
         takeDamage(1);
+
+        ButtonManager.setTextIntoInfoField(this.getClass().getSimpleName() + " moved to " + coordinates );
     }
 
     static Coordinates checkTargetAround(LinkedHashMap<Coordinates, Entity> entities, Creature creature) {
