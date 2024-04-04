@@ -14,6 +14,7 @@ import static com.devminrat.utils.Actions.nextTurn;
 public class MainFrame extends JFrame {
 
     public JFrame frame;
+
     public MainFrame(Field field) {
         SwingUtilities.invokeLater(() -> {
             frame = new JFrame("Simulation");
@@ -53,16 +54,15 @@ public class MainFrame extends JFrame {
 
                         return null;
                     }
-                    @Override
-                    protected void done() {
-                        setButtonsEnabled(true);
-                    }
                 };
                 loopWorkerRef.set(worker);
                 worker.execute();
             });
             pauseLoopButton.addActionListener(e -> {
                 SwingWorker<Void, Void> worker = loopWorkerRef.get();
+                if (worker != null && !worker.isCancelled()) {
+                    pauseLoopButton.setEnabled(false);
+                }
                 if (worker != null && !worker.isDone()) {
                     worker.cancel(true);
                 }

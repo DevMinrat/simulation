@@ -12,9 +12,9 @@ public class ButtonManager {
     private static JLabel infoField;
 
     public static void initButtons() {
-        nextTurnButton = new Button("Next turn");
+        nextTurnButton = new Button("Do one turn");
         runLoopButton = new Button("Run loop simulation");
-        pauseLoopButton = new Button("Pause simulation");
+        pauseLoopButton = new Button("Pause after turn");
         infoField = new JLabel("Turn information");
 
         setAllButtonSize(150, 30);

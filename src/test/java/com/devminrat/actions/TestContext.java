@@ -2,17 +2,14 @@ package com.devminrat.actions;
 
 import com.devminrat.Coordinates;
 import com.devminrat.Field;
-import com.devminrat.FieldConsoleRender;
 import com.devminrat.entities.Obstacle;
 
 public class TestContext {
     public final Spec spec;
     public final Field testField;
-    public final FieldConsoleRender consoleRender;
 
     public TestContext(Spec spec) {
         this.spec = spec;
-        this.consoleRender = new FieldConsoleRender();
         this.testField = new Field();
     }
 

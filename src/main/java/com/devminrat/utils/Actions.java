@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.devminrat.gui.ButtonManager.setButtonsEnabled;
+import static com.devminrat.gui.ButtonManager.*;
 
 public class Actions {
     public static AtomicReference<SwingWorker<Void, Void>> turnWorker = new AtomicReference<>();
@@ -25,7 +25,6 @@ public class Actions {
                     if (entity instanceof Creature creature) {
                         if (creature.isForDeletion()) return null;
                         for (int i = 0; i < creature.getSpeed(); i++) {
-                            System.out.println("Move");
                             copyEntities = creature.makeMove(copyEntities);
                             field.setEntities(copyEntities);
 
@@ -47,6 +46,7 @@ public class Actions {
             @Override
             protected void done() {
                 setButtonsEnabled(true);
+                getPauseLoopButton().setEnabled(true);
             }
         };
         turnWorker.set(worker);
